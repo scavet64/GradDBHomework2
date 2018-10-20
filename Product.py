@@ -1,13 +1,15 @@
-'''
+"""
 Created on October 19, 2018
 
 @author: Vincent Scavetta
-'''
+"""
+
 from datetime import datetime
+
+from base import BASE  # Leverage an instance of the declarative_base
 from sqlalchemy import Column, String, PrimaryKeyConstraint, Index, ForeignKeyConstraint, Float
 from sqlalchemy.dialects.mysql import SMALLINT, TIMESTAMP
 from sqlalchemy.orm import relationship, backref
-from base import BASE  # Leverage an instance of the declarative_base
 
 
 # the Product table
@@ -30,9 +32,9 @@ class Product(BASE):
     # Since the secondary table is also explicitly mapped elsewhere as Film_Actor
     # the relationship should have the viewonly flag so that we can save actors
     # independently of films
-    ratings = relationship("customer", secondary="customer_rating", viewonly=True)
-    orders = relationship("customer", secondary="customer_order", viewonly=True)
-    category = relationship("category", backref=backref('product'))
+    ratings = relationship('customer', secondary='customer_rating', viewonly=True)
+    orders = relationship('customer', secondary='customer_order', viewonly=True)
+    category = relationship('category', backref=backref('product'))
 
     __table_args__ = (
         PrimaryKeyConstraint('product_id', name='PRIMARY'),
@@ -40,7 +42,8 @@ class Product(BASE):
         ForeignKeyConstraint(['category_id'], ['category.category_id']),)
 
     # The constructor with only the fields we care about from Product table
-    def __init__(self, name, description, supplier_id, category_id, cost, reorder_level, weight_unit_of_measure, weight):
+    def __init__(self, name, description, supplier_id, category_id, cost, reorder_level, weight_unit_of_measure,
+                 weight):
         self.name = name
         self.description = description
         self.supplier_id = supplier_id
@@ -58,7 +61,7 @@ class Product(BASE):
                "\n\tdescription = {self.description}," \
                "\n\tdescription = {self.description}," \
                "\n\tsupplier_id = {self.supplier_id}," \
-               "\n\tcategory_id = {self.category_id},"\
+               "\n\tcategory_id = {self.category_id}," \
                "\n\tcost = {self.cost}," \
                "\n\treorder_level = {self.reorder_level}," \
                "\n\tweight_unit_of_measure = {self.weight_unit_of_measure}," \

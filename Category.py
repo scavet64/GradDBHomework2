@@ -1,13 +1,15 @@
-'''
+"""
 Created on October 19, 2018
 
 @author: Vincent Scavetta
-'''
+"""
+
 from datetime import datetime
+
+from base import BASE  # Leverage an instance of the declarative_base
 from sqlalchemy import Column, String, PrimaryKeyConstraint, ForeignKey
 from sqlalchemy.dialects.mysql import SMALLINT
 from sqlalchemy.orm import relationship
-from base import BASE  # Leverage an instance of the declarative_base
 
 
 # one category can have many products
@@ -17,7 +19,7 @@ class Category(BASE):
     category_id = Column('category_id', SMALLINT(unsigned=True), nullable=False, primary_key=True)
     name = Column('name', String(255), nullable=False)
 
-    products = relationship("product", viewonly=True)
+    products = relationship('product', viewonly=True)
 
     __table_args__ = (
         PrimaryKeyConstraint('category_id', name='PRIMARY'),)
