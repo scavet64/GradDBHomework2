@@ -26,7 +26,7 @@ class Customer(BASE):
     ratings = relationship('product', secondary='customer_rating', viewonly=True)
     orders = relationship('product', secondary='customer_order', viewonly=True)
     shopping_cart = relationship('product', secondary='customer_shopping_cart', viewonly=True)
-    wish_list = relationship('product', secondary='customer_wish_list', viewonly=True)
+    wishlist = relationship('product', secondary='customer_wishlist', viewonly=True)
 
     address = relationship('address', secondary='customer_address', viewonly=True)
 
