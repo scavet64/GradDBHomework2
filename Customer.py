@@ -6,10 +6,11 @@ Created on October 19, 2018
 
 from datetime import datetime
 
-from base import BASE  # Leverage an instance of the declarative_base
 from sqlalchemy import Column, String, PrimaryKeyConstraint, Index
 from sqlalchemy.dialects.mysql import SMALLINT, TIMESTAMP
 from sqlalchemy.orm import relationship
+
+from base import BASE  # Leverage an instance of the declarative_base
 
 
 class Customer(BASE):
