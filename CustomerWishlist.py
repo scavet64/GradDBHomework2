@@ -6,7 +6,8 @@ Created on October 31, 2018
 
 import datetime
 
-from sqlalchemy import Column, SMALLINT, ForeignKey, TIMESTAMP, PrimaryKeyConstraint, ForeignKeyConstraint
+from sqlalchemy import Column, ForeignKey, PrimaryKeyConstraint, ForeignKeyConstraint
+from sqlalchemy.dialects.mysql import SMALLINT, TIMESTAMP
 from sqlalchemy.orm import relationship, backref
 
 from base import BASE
