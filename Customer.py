@@ -6,10 +6,11 @@ Created on October 19, 2018
 
 from datetime import datetime
 
-from base import BASE  # Leverage an instance of the declarative_base
 from sqlalchemy import Column, String, PrimaryKeyConstraint, Index
 from sqlalchemy.dialects.mysql import SMALLINT, TIMESTAMP
 from sqlalchemy.orm import relationship
+
+from base import BASE  # Leverage an instance of the declarative_base
 
 
 class Customer(BASE):
@@ -25,7 +26,7 @@ class Customer(BASE):
     ratings = relationship('product', secondary='customer_rating', viewonly=True)
     orders = relationship('product', secondary='customer_order', viewonly=True)
     shopping_cart = relationship('product', secondary='customer_shopping_cart', viewonly=True)
-    wish_list = relationship('product', secondary='customer_wish_list', viewonly=True)
+    wishlist = relationship('product', secondary='customer_wishlist', viewonly=True)
 
     address = relationship('address', secondary='customer_address', viewonly=True)
 
