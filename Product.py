@@ -33,11 +33,10 @@ class Product(BASE):
     # the relationship should have the viewonly flag so that we can save actors
     # independently of films
 
-    # Commented out so flask will work
+    # Commented out so flask will work for now. These would need to be created in the future for the real project
     # ratings = relationship('customer', secondary='customer_rating', viewonly=True)
     # orders = relationship('customer', secondary='customer_order', viewonly=True)
     category = relationship('Category', backref=backref('product'))
-    #wishlist = relationship('Customer', secondary='customer_wishlist', viewonly=True)
 
     __table_args__ = (
         PrimaryKeyConstraint('product_id', name='PRIMARY'),

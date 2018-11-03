@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from base import BASE
 from Category import Category
-from Customer import Customer, CustomerWishlist
+from Customer import Customer
 from Product import Product
 
 # create an instance of the Flask class
@@ -43,8 +43,6 @@ def get_wish_lists():
     customer = session.query(Customer).first()
     output = '<h1>' + customer.first_name + ' ' + customer.last_name + '</h1>\n'
     output += '<p>' + customer.email_address + '</p>\n'
-    # output += '<p>' + customer.last_login + '</p>\n'
-    # output += '<p>' + customer.last_update + '</p>\n'
     output += '<p>Customer Wishlist:</p>\n'
     output += '<ul>\n'
     for product in customer.wishlist:
