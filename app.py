@@ -1,19 +1,16 @@
 from flask import Flask
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from base import BASE
+from Category import Category
+from Customer import Customer, CustomerWishlist
+from Product import Product
 
 # create an instance of the Flask class
 # Any time we run the application __name__ gets defined for the app
 app = Flask(__name__)
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from base import BASE
-# from sakila_flask.databose_model import Film, Film_Actor, Actor, Award
-from Category import Category
-from Customer import Customer, CustomerWishlist
-#from CustomerWishlist import CustomerWishlist
-from Product import Product
-connection = create_engine('mysql+pymysql://root:DATABASEPASSWORD@127.0.0.1:3306/grad_db')
-# connection = create_engine('mysql+pymysql://guest:guest@localhost/guest')
+connection = create_engine('mysql+pymysql://root:PASSWORD@127.0.0.1:3306/grad_db')
 BASE.metadata.create_all(connection)
 
 Session = sessionmaker(bind=connection)
@@ -24,55 +21,36 @@ session = Session()
 # browser, the function listed will run.
 @app.route('/')
 def index():
-    return "<h1>Sakila</h1><h2>Only the best movies live here</h2>"
+    return "<h1>Amazon Silver</h1><h2>Kinda like amazon but not</h2>"
 
 
-@app.route('/Products')
-def getproducts():
+@app.route('/products')
+def get_products():
     product = session.query(Product).first()
     output = '<h1>' + product.name + ' ' + product.description + '</h1>'
     return output
 
 
-@app.route('/Categorys')
-def getfilms():
-    film = session.query(Category).first()
-    output = '<h1>' + film.title + '</h1>\n'
-    output += '<summary>' + film.description + '</summary>\n'
-    output += '<p>This film is rated ' + film.rating
-    output +=  ' and was made in ' + str(film.release_year)
-    output += '.  ' + film.title + ' runs for ' + str(film.length) + ' minutes.</p>\n'
+@app.route('/categorys')
+def get_categories():
+    category = session.query(Category).first()
+    output = '<h1>' + category.name + '</h1>\n'
+    return output
+
+
+@app.route('/Customer')
+def get_wish_lists():
+    customer = session.query(Customer).first()
+    output = '<h1>' + customer.first_name + ' ' + customer.last_name + '</h1>\n'
+    output += '<p>' + customer.email_address + '</p>\n'
+    # output += '<p>' + customer.last_login + '</p>\n'
+    # output += '<p>' + customer.last_update + '</p>\n'
+    output += '<p>Customer Wishlist:</p>\n'
     output += '<ul>\n'
-    for actor in film.actors:
-        output += '<li>' + actor.first_name + ' ' + actor.last_name + '</li>\n'
+    for product in customer.wishlist:
+        output += '<li>' + product.name + '</li>\n'
     return output
     output += '</ul>'
-
-
-@app.route('/CustomerWishlist')
-def getwishlists():
-    film = session.query(CustomerWishlist).first()
-    output = '<h1>' + film.title + '</h1>\n'
-    output += '<summary>' + film.description + '</summary>\n'
-    output += '<p>This film is rated ' + film.rating
-    output +=  ' and was made in ' + str(film.release_year)
-    output += '.  ' + film.title + ' runs for ' + str(film.length) + ' minutes.</p>\n'
-    output += '<ul>\n'
-    for actor in film.actors:
-        output += '<li>' + actor.first_name + ' ' + actor.last_name + '</li>\n'
-    return output
-    output += '</ul>'
-
-
-# # The application run by the Python interpreter gets a name 0f __main__
-# if __name__ == '__main__':
-#     app.debug = True
-#     app.run()  # this will run the local server with this app
-
-
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
 
 
 if __name__ == '__main__':
