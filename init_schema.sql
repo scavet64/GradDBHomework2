@@ -9,7 +9,7 @@ CREATE TABLE `category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `customer` (
   `customer_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -19,7 +19,7 @@ CREATE TABLE `customer` (
   `last_login` datetime NOT NULL,
   `last_update` datetime NOT NULL,
   PRIMARY KEY (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `customer_wishlist` (
   `customer_id` int(11) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE `customer_wishlist` (
   KEY `FK_product_wishlist_idx` (`product_id`),
   CONSTRAINT `FK_customer_wishlist` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_product_wishlist` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `product` (
   `product_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -46,6 +46,9 @@ CREATE TABLE `product` (
   PRIMARY KEY (`product_id`),
   KEY `FK_product_category_idx` (`category_id`),
   CONSTRAINT `FK_product_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-insert into 
+insert into category (name) values ('Science Co');
+insert into product (name, description, supplier_id, category_id, cost, reorder_level, weight_unit_of_measure, weight, last_update) values ('flask', 'it holds stuff', '1', '1', 19.99, 10, 'kg', 0.4, now());
+insert into customer (first_name, last_name, email_address, last_login, last_update) values ('John', 'Cena', 'JCena@gmail.com', now(), now());
+insert into customer_wishlist (customer_id, product_id, last_update) values (1, 1, now());
