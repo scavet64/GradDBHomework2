@@ -6,9 +6,9 @@ Created on October 19, 2018
 
 from datetime import datetime
 
-from sqlalchemy import Column, String, PrimaryKeyConstraint, Index
+from sqlalchemy import Column, String, PrimaryKeyConstraint, Index, ForeignKeyConstraint, ForeignKey
 from sqlalchemy.dialects.mysql import SMALLINT, TIMESTAMP
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 from base import BASE  # Leverage an instance of the declarative_base
 
@@ -23,12 +23,12 @@ class Customer(BASE):
     last_login = Column('last_login', TIMESTAMP, nullable=False)
     last_update = Column('last_update', TIMESTAMP, nullable=False)
 
-    ratings = relationship('product', secondary='customer_rating', viewonly=True)
-    orders = relationship('product', secondary='customer_order', viewonly=True)
-    shopping_cart = relationship('product', secondary='customer_shopping_cart', viewonly=True)
-    wishlist = relationship('product', secondary='customer_wishlist', viewonly=True)
+    # ratings = relationship('product', secondary='customer_rating', viewonly=True)
+    # orders = relationship('product', secondary='customer_order', viewonly=True)
+    # shopping_cart = relationship('product', secondary='customer_shopping_cart', viewonly=True)
+    wishlist = relationship('Product', secondary='customer_wishlist', viewonly=True)
 
-    address = relationship('address', secondary='customer_address', viewonly=True)
+    # address = relationship('address', secondary='customer_address', viewonly=True)
 
     __table_args__ = (
         PrimaryKeyConstraint('customer_id', name='PRIMARY'),
@@ -48,3 +48,24 @@ class Customer(BASE):
                "\n\temail_address = {self.email_address}," \
                "\n\tlast_login = {self.last_login}," \
                "\n\tlast_update = {self.last_update})".format(self=self)
+
+
+class CustomerWishlist(BASE):
+    __tablename__ = 'customer_wishlist'
+
+    customer_id = Column('customer_id', SMALLINT(unsigned=True), ForeignKey('customer.customer_id'), nullable=False)
+    product_id = Column('product_id', SMALLINT(unsigned=True), ForeignKey('product.product_id'), nullable=False)
+    last_update = Column('last_update', TIMESTAMP, nullable=False)
+
+    customers = relationship('Customer', backref=backref('customer_wishlist'))
+    products = relationship('Product', backref=backref('customer_wishlist'))
+
+    __table_args__ = (
+        PrimaryKeyConstraint('customer_id', 'product_id', name='PRIMARY'),
+        ForeignKeyConstraint(['customer_id'], ['customer.customer_id']),
+        ForeignKeyConstraint(['product_id'], ['product.product_id']))
+
+    def __init__(self, customer, product):
+        self.customer = customer
+        self.product = product
+        self.last_update = datetime.today()
