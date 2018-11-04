@@ -19,7 +19,7 @@ class Category(BASE):
     category_id = Column('category_id', SMALLINT(unsigned=True), nullable=False, primary_key=True)
     name = Column('name', String(255), nullable=False)
 
-    products = relationship('product', viewonly=True)
+    products = relationship('Product', viewonly=True)
 
     __table_args__ = (
         PrimaryKeyConstraint('category_id', name='PRIMARY'),)
