@@ -1,3 +1,7 @@
+drop DATABASE IF EXISTS grad_db;
+CREATE DATABASE grad_db;
+use grad_db;
+
 SET FOREIGN_KEY_CHECKS=0;
 drop table IF EXISTS `category`;
 drop table IF EXISTS `customer`;
