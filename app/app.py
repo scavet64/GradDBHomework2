@@ -10,7 +10,7 @@ from Product import Product
 # Any time we run the application __name__ gets defined for the app
 app = Flask(__name__)
 
-connection = create_engine('mysql+pymysql://root:PASSWORD@127.0.0.1:3306/grad_db')
+connection = create_engine('mysql+pymysql://root:PASSWORD@db:3306/grad_db')
 BASE.metadata.create_all(connection)
 
 Session = sessionmaker(bind=connection)
@@ -52,4 +52,4 @@ def get_wish_lists():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
