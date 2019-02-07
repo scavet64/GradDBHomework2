@@ -6,15 +6,28 @@ from Category import Category
 from Customer import Customer
 from Product import Product
 
+import time
+
 # create an instance of the Flask class
 # Any time we run the application __name__ gets defined for the app
 app = Flask(__name__)
 
-connection = create_engine('mysql+pymysql://root:PASSWORD@db:3306/grad_db')
-BASE.metadata.create_all(connection)
+started = 0;
+i = 0
+while i < 12 or started == 1:
+    try:
+        connection = create_engine('mysql+pymysql://root:PASSWORD@db:3306/grad_db')
+        BASE.metadata.create_all(connection)
 
-Session = sessionmaker(bind=connection)
-session = Session()
+        Session = sessionmaker(bind=connection)
+        session = Session()
+        started = 1
+        break
+    except:
+        print("Could not connect to database")
+        i += 1
+        time.sleep(5)
+        break
 
 
 # Python decorators: if either of these routes get sent by the
