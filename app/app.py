@@ -14,9 +14,9 @@ app = Flask(__name__)
 
 started = 0;
 i = 0
-while i < 12 or started == 1:
+while i < 5 or started == 1:
     try:
-        connection = create_engine('mysql+pymysql://root:PASSWORD@db:3306/grad_db')
+        connection = create_engine('mysql+pymysql://root:PASSWORD@mysql_database:3306/grad_db')
         BASE.metadata.create_all(connection)
 
         Session = sessionmaker(bind=connection)
@@ -27,7 +27,6 @@ while i < 12 or started == 1:
         print("Could not connect to database")
         i += 1
         time.sleep(5)
-        break
 
 
 # Python decorators: if either of these routes get sent by the
@@ -51,7 +50,7 @@ def get_categories():
     return output
 
 
-@app.route('/Customer')
+@app.route('/customer')
 def get_wish_lists():
     customer = session.query(Customer).first()
     output = '<h1>' + customer.first_name + ' ' + customer.last_name + '</h1>\n'

@@ -56,7 +56,7 @@ insert into category (category_id, name) values (1, 'Science Co');
 insert into product (product_id, name, description, supplier_id, category_id, cost, reorder_level, weight_unit_of_measure, weight, last_update) values (1, 'flask', 'it holds stuff', 1, 1, 19.99, 10, 'kg', 0.4, now());
 insert into product (product_id, name, description, supplier_id, category_id, cost, reorder_level, weight_unit_of_measure, weight, last_update) values (2, 'Helmet', 'It protects you', 1, 1, 19.99, 5, 'kg', 1.0, now());
 insert into product (product_id, name, description, supplier_id, category_id, cost, reorder_level, weight_unit_of_measure, weight, last_update) values (3, 'Computer', 'it computes stuff', 1, 1, 1999.99, 2, 'kg', 1.4, now());
-insert into customer (customer_id, first_name, last_name, email_address, last_login, last_update) values (1, 'John', 'Cena', 'JCena@gmail.com', now(), now());
+insert into customer (customer_id, first_name, last_name, email_address, last_login, last_update) values (1, 'Vincent', 'Scavetta', 'scavet64@students.rowan.edu', now(), now());
 insert into customer_wishlist (customer_id, product_id, last_update) values (1, 1, now());
 insert into customer_wishlist (customer_id, product_id, last_update) values (1, 2, now());
 insert into customer_wishlist (customer_id, product_id, last_update) values (1, 3, now());

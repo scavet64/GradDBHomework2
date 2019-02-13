@@ -3,10 +3,10 @@ services:
   app:
     build: ./app
     links:
-      - db
+      - mysql_database
     ports:
       - "5000:5000"
-  db:
+  mysql_database:
     image: mysql:5.7
     ports:
     - "32000:3306"
